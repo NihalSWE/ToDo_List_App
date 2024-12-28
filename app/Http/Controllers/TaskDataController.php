@@ -37,7 +37,30 @@ class TaskDataController extends Controller
 
     public function edittask(Request $request, $id)
     {
-        return view('edit');
+        $taskData = TaskData::findOrFail($id);
+        return view('edit', ['taskData' => $taskData]);
+    }
+
+    public function updatetask(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required|max:255', // Correct table name
+            'description' => 'required|max:300', // Correct validation rule
+            'status' => 'required|in:pending,completed', // Validation for the status field
+            'due_date' => 'required|date' // Validation for the due_date field
+        ]);
+
+        $taskData = TaskData::findOrFail($id);
+        $taskData->title = $request->title;
+        $taskData->description = $request->description;
+        $taskData->status = $request->status; // Fixed the typo here
+        $taskData->due_date = $request->due_date;
+
+        $taskData->save();
+
+        flash()->success('Your data updated in the app.');
+
+        return redirect()->route('home', ['taskData' => $taskData]);
     }
 }
 
@@ -45,4 +68,3 @@ class TaskDataController extends Controller
 
 
 
-Route::post('store/', ['tasks' => TaskData::all()])->name('store');
