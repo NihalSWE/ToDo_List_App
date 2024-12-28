@@ -28,8 +28,21 @@ class TaskDataController extends Controller
         $taskData->due_date = $request->due_date;
 
         $taskData->save();
-        
-        return redirect()->route('home')->with('success', 'Your data saved in the app');
+
+        flash()->success('Your data saved in the app.');
+
+        return redirect()->route('home');
 
     }
+
+    public function edittask(Request $request, $id)
+    {
+        return view('edit');
+    }
 }
+
+
+
+
+
+Route::post('store/', ['tasks' => TaskData::all()])->name('store');

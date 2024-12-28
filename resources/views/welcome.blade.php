@@ -37,7 +37,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">All Tasks</p>
-                        {{-- <p class="text-2xl font-semibold">{{ $tasks->count() }}</p> --}}
+                        <p class="text-2xl font-semibold">{{ $tasks->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Pending</p>
-                        {{-- <p class="text-2xl font-semibold">{{ $tasks->where('status', 'pending')->count() }}</p> --}}
+                        <p class="text-2xl font-semibold">{{ $tasks->where('status', 'pending')->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Completed</p>
-                        {{-- <p class="text-2xl font-semibold">{{ $tasks->where('status', 'completed')->count() }}</p> --}}
+                        <p class="text-2xl font-semibold">{{ $tasks->where('status', 'completed')->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -93,37 +93,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($tasks as $task)
-                        <tr class="border-b hover:bg-gray-50 transition-colors">
-                            <td class="py-4 px-6">
-                                <div class="font-medium text-gray-900">{{ $task->title }}</div>
-                            </td>
-                            <td class="py-4 px-6">
-                                <div class="text-sm text-gray-500">{{ Str::limit($task->description, 50) }}</div>
-                            </td>
-                            <td class="py-4 px-6">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                        @foreach ($tasks as $task)
+                            <tr class="border-b hover:bg-gray-50 transition-colors">
+                                <td class="py-4 px-6">
+                                    <div class="font-medium text-gray-900">{{ $task->title }}</div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <div class="text-sm text-gray-500">{{ Str::limit($task->description, 50) }}</div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                     {{ $task->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                    {{ ucfirst($task->status) }}
-                                </span>
-                            </td>
-                            <td class="py-4 px-6">
-                                <div class="text-sm text-gray-900">{{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}</div>
-                            </td>
-                            <td class="py-4 px-6 text-right">
-                                <a href="{{ route('tasks.edit', $task->id) }}" class="text-gray-400 hover:text-blue-600 mr-3">
-                                    <i data-feather="edit-2" class="w-4 h-4"></i>
-                                </a>
-                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-gray-400 hover:text-red-600">
-                                        <i data-feather="trash-2" class="w-4 h-4"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach --}}
+                                        {{ ucfirst($task->status) }}
+                                    </span>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <div class="text-sm text-gray-900">
+                                        {{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}</div>
+                                </td>
+                                <td class="py-4 px-6 text-right">
+                                    <a href="{{ route('edit', $task->id) }}"
+                                        class="text-gray-400 hover:text-blue-600 mr-3">
+                                        <i data-feather="edit-2" class="w-4 h-4"></i>
+                                    </a>
+                                    <form action="#" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-gray-400 hover:text-red-600">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
