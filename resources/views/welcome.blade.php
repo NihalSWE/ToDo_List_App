@@ -4,90 +4,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>To-Do List Application</title>
-
-    <!-- Tailwind CSS CDN -->
+    <title>Task Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Inter:wght@400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 </head>
 
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-50 font-['Inter']">
+    <!-- Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <h1 class="text-xl font-bold text-gray-800">Task Manager</h1>
+                <button
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"><i
+                        data-feather="plus" class="w-4 h-4"></i>
+                    <a href="{{ route('create') }}">
+                        New Task</a>
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <!-- Main Container -->
-    <div class="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-
-        <!-- Header Section -->
-        <header class="text-center py-12 text-white">
-            <h1 class="text-5xl font-extrabold">To-Do List Application</h1>
-            <p class="mt-4 text-lg">Stay organized and manage your tasks efficiently.</p>
-        </header>
-
-        <!-- Add Task Button -->
-        <div class="flex justify-center mb-8">
-            <a href="{{ route('create') }}"
-                class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Add New Task
-            </a>
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-blue-100 rounded-lg">
+                        <i data-feather="list" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">All Tasks</p>
+                        {{-- <p class="text-2xl font-semibold">{{ $tasks->count() }}</p> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-yellow-100 rounded-lg">
+                        <i data-feather="clock" class="w-6 h-6 text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Pending</p>
+                        {{-- <p class="text-2xl font-semibold">{{ $tasks->where('status', 'pending')->count() }}</p> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-green-100 rounded-lg">
+                        <i data-feather="check-circle" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Completed</p>
+                        {{-- <p class="text-2xl font-semibold">{{ $tasks->where('status', 'completed')->count() }}</p> --}}
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Task List Section -->
-        <div class="max-w-4xl mx-auto px-6 py-8 bg-white rounded-xl shadow-lg">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Your Tasks</h2>
+        <!-- Search Bar -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
+            <div class="flex flex-wrap gap-4">
+                <div class="flex-1 min-w-[240px]">
+                    <div class="relative">
+                        <input type="text" placeholder="Search tasks..."
+                            class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i data-feather="search"
+                            class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <!-- Task Table -->
+        <!-- Task List -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="w-full">
                     <thead>
-                        <tr>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                Title</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                Due Date</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                Actions</th>
+                        <tr class="border-b">
+                            <th class="text-left py-4 px-6 text-sm font-medium text-gray-500">Title</th>
+                            <th class="text-left py-4 px-6 text-sm font-medium text-gray-500">Description</th>
+                            <th class="text-left py-4 px-6 text-sm font-medium text-gray-500">Status</th>
+                            <th class="text-left py-4 px-6 text-sm font-medium text-gray-500">Due Date</th>
+                            <th class="text-right py-4 px-6 text-sm font-medium text-gray-500">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200">
+                    <tbody>
                         {{-- @foreach ($tasks as $task)
-                            <tr class="hover:bg-gray-50 transition duration-300">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ $task->title }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                                    <span class="px-3 py-1 rounded-full text-white bg-{{ $task->status == 'completed' ? 'green' : 'yellow' }}-500">
-                                        {{ ucfirst($task->status) }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ \Carbon\Carbon::parse($task->due_date)->format('Y-m-d') }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('tasks.edit', $task->id) }}" class="text-blue-600 hover:text-blue-800">Edit</a>
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="inline-block ml-4">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                        <tr class="border-b hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6">
+                                <div class="font-medium text-gray-900">{{ $task->title }}</div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <div class="text-sm text-gray-500">{{ Str::limit($task->description, 50) }}</div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                    {{ $task->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                    {{ ucfirst($task->status) }}
+                                </span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <div class="text-sm text-gray-900">{{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}</div>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <a href="{{ route('tasks.edit', $task->id) }}" class="text-gray-400 hover:text-blue-600 mr-3">
+                                    <i data-feather="edit-2" class="w-4 h-4"></i>
+                                </a>
+                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-gray-400 hover:text-red-600">
+                                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach --}}
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <!-- Footer Section -->
-        <footer class="bg-gray-900 text-white text-center py-4 mt-12">
-            <p>&copy; 2024 To-Do List Application | Designed by Nihal</p>
-        </footer>
     </div>
 
+    <script>
+        feather.replace();
+    </script>
 </body>
 
 </html>
