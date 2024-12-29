@@ -16,3 +16,5 @@ Route::post('store/', [TaskDataController::class, 'storeData'])->name('store');
 Route::get('edit/{id}', [TaskDataController::class, 'edittask'])->name('edit');
 
 Route::post('update/{id}', [TaskDataController::class, 'updatetask'])->name('update');
+
+Route::delete('delete/{id}', [TaskDataController::class, 'deletetask'])->name('delete');

@@ -62,6 +62,14 @@ class TaskDataController extends Controller
 
         return redirect()->route('home', ['taskData' => $taskData]);
     }
+
+    public function deletetask(Request $request, $id)
+    {
+        $taskData = TaskData::findOrFail($id);
+        $taskData->delete();
+        flash()->success('Your data deleted in the app.');
+        return redirect()->route('home');
+    }
 }
 
 

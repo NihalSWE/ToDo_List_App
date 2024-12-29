@@ -117,7 +117,8 @@
                                         class="text-gray-400 hover:text-blue-600 mr-3">
                                         <i data-feather="edit-2" class="w-4 h-4"></i>
                                     </a>
-                                    <form action="#" method="POST" class="inline-block">
+                                    <form action="{{ route('delete', $task->id) }}" method="POST"
+                                        class="inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-gray-400 hover:text-red-600">
