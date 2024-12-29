@@ -65,19 +65,24 @@
             </div>
         </div>
 
-        <!-- Search Bar -->
-        <div class="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
-            <div class="flex flex-wrap gap-4">
-                <div class="flex-1 min-w-[240px]">
-                    <div class="relative">
-                        <input type="text" placeholder="Search tasks..."
-                            class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <i data-feather="search"
-                            class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
-                    </div>
-                </div>
+    <!-- Search Bar -->
+<div class="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
+    <div class="flex flex-wrap gap-4">
+        <div class="flex-1 min-w-[240px]">
+            <div class="relative">
+                <!-- Search Form -->
+                <form action="{{ route('search') }}" method="GET">
+                    <input type="text" name="search" placeholder="Search tasks..."
+                        class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                        value="{{ request('search') }}"> <!-- Keeps the search value after submit -->
+                    <i data-feather="search" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                </form>
             </div>
         </div>
+    </div>
+</div>
+
+
 
         <!-- Task List -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-100">

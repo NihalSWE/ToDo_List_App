@@ -70,6 +70,35 @@ class TaskDataController extends Controller
         flash()->success('Your data deleted in the app.');
         return redirect()->route('home');
     }
+
+    public function search(Request $request)
+{
+    // Get the search query from the input
+    $searchQuery = $request->input('search');
+
+    // If the search query is provided, filter the tasks, otherwise fetch all tasks
+    $tasks = TaskData::query(); // Start the query
+
+    // Apply filter only if there's a search query
+    if ($searchQuery) {
+        $tasks->where(function ($query) use ($searchQuery) {
+            $query->where('title', 'like', '%' . $searchQuery . '%')
+                  ->orWhere('description', 'like', '%' . $searchQuery . '%')
+                  ->orWhere('status', 'like', '%' . $searchQuery . '%');
+        });
+    }
+
+    // Get the tasks based on the filter
+    $tasks = $tasks->get();
+
+    // Return the filtered tasks back to the 'home' view with the search query
+    return view('welcome', ['tasks' => $tasks, 'search' => $searchQuery]);
+}
+
+
+
+
+
 }
 
 
